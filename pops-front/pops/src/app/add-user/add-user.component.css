@@ -1,0 +1,38 @@
+                                    .hive-menu-navbar {
+                                      position: relative;
+                                      box-sizing: border-box;
+                                      color: #0a0a0a;
+                                      width: 0;
+                                      height: 0;
+                                      display: block;
+                                      line-height: 1.1;
+                                      font-family: Helvetica Neue, Helvetica, Roboto, Arial, sans-serif;
+                                      font-size: 14px;
+                                      font-weight: 400;
+                                      -ms-text-size-adjust: 100%;
+                                      -webkit-text-size-adjust: 100%;
+                                      -webkit-font-smoothing: antialiased;
+                                      -moz-osx-font-smoothing: grayscale;
+                                    }
+
+.hive-menu-navbar-wrapper {
+  bottom: auto;
+  margin: 0;
+  top: 0;
+  width: 100%;
+  position: fixed;
+  left: 0;
+  right: auto;
+  transform: translateZ(0);
+  z-index: 0;
+  padding: 0;
+}
+
+.hive-menu-ui-top-bar-modules {
+  z-index: 20;
+  padding: 0;
+  width: 100%;
+  color: #e6e6e6;
+  background: #1c3966;
+  border-bottom: 1px solid #e95053;
+}

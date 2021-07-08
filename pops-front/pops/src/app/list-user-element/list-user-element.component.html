@@ -1,0 +1,116 @@
+<div *ngIf="isEdit">
+
+  <table class="hover expanded separated" style="table-layout:fixed">
+    <tbody>
+    <td width="30"><input [value]="user.id" [(ngModel)]="user.id" [disabled]="true"></td>
+    <td width="60"><input [value]="user.name" [(ngModel)]="user.name"></td>
+    <td width="70"><input [value]="user.firstname" [(ngModel)]="user.firstname"></td>
+    <td width="160"><input class="large-12" [value]="user.email" [(ngModel)]="user.email"></td>
+    <td width="55">
+      <select id="contract" required="" [(ngModel)]="user.contract">
+        <option *ngFor=" let contract_user of contracts" [value]="contract_user.libelle">
+          {{ contract_user.libelle }}
+        </option>
+      </select>
+    </td>
+    <td>
+      <select id="location" required="" [(ngModel)]="user.location">
+        <option *ngFor=" let location_user of localisations" [value]="location_user.libelle">
+          {{ location_user.libelle }}
+        </option>
+      </select>
+    </td>
+    <td>
+      <select id="department" required="" [(ngModel)]="user.department">
+        <option *ngFor=" let department_user of departments" [value]="department_user.libelle">
+          {{ department_user.libelle }}
+        </option>
+      </select>
+    </td>
+    <td>
+      <select id="service" required="" [(ngModel)]="user.service">
+        <option *ngFor=" let service_user of services" [value]="service_user.libelle">
+          {{ service_user.libelle }}
+        </option>
+      </select>
+    </td>
+    <td>
+      <select id="business_unit" required="" [(ngModel)]="user.business_unit">
+        <option *ngFor=" let businessunit of business_units" [value]="businessunit.libelle">
+          {{ businessunit.libelle }}
+        </option>
+      </select>
+    </td>
+    <td>
+      <select id="role_type" required="" [(ngModel)]="user.role_type">
+        <option *ngFor="let role of roles " [value]="role.type">{{ role.type }}</option>
+      </select>
+    </td>
+    <td width="115">{{user.date_start | date : 'medium'}}<input type="datetime-local" id="date_start" [(ngModel)]="user.date_start"></td>
+    <!--<ng-container *ngIf="( user.date_end | date:'dd/MM/yyyy') == (test | date:'dd/MM/yyyy')"><td>dd/MM/yyyy<input type="datetime-local" [(ngModel)]="user.date_end"></td></ng-container>-->
+    <td width="115">{{user.date_end | date : 'medium'}}<input type="datetime-local" id="date_end" [(ngModel)]="user.date_end"></td>
+    <td width="70">
+          <input type="radio" name="is_enabled_y" [checked]="user.is_enabled===true" [value]="true" [(ngModel)]="user.is_enabled">
+        <p>actif</p>
+          <input type="radio" name="is_enabled_n" [checked]="user.is_enabled===false" [value]="false" [(ngModel)]="user.is_enabled">
+        <p>inactif</p>
+    </td>
+    <td width="42">
+      <input type="radio" name="got_iphone_y" [checked]="user.got_iphone===true" [value]="true" [(ngModel)]="user.got_iphone">
+      <p>oui</p>
+      <input type="radio" name="got_iphone_n" [checked]="user.got_iphone===false" [value]="false" [(ngModel)]="user.got_iphone">
+      <p>non</p>
+    </td>
+    <td>
+      <select id="manager_name" required="" [(ngModel)]="user.manager_name">
+        <option *ngFor="let manager of managers" [value]="manager.name">{{ manager.name }}</option>
+      </select>
+    </td>
+                              <!--BUTTON EXIT THE EDIT LINE-->
+    <button class="rounded button alert" (click)="isEdit=false;exitUpdate()"> x </button>
+                              <!--BUTTON VALIDATE THE EDIT LINE-->
+    <button class="rounded button success"
+            (click)="isEdit=false;updateUser(user.id,user.email,user.role_type,user.department,user.contract,user.location,user.firstname,user.name,user.service,user.business_unit,user.manager_name,user.got_iphone,user.date_start,user.date_end,user.is_enabled)">
+      ✓ </button>
+    </tbody>
+  </table>
+</div>
+
+<div *ngIf="!isEdit" class="row expanded">
+  <table class="hover expanded separated" style="table-layout:fixed">
+    <tbody>
+    <td width="30"><label>{{user.id}}</label></td>
+    <td width="60"> <label>{{user.name}}</label></td>
+    <td width="70"><label>{{user.firstname}} </label></td>
+    <td width="160"><label>{{user.email}}</label></td>
+    <td width="52"><label>{{user.contract}}</label></td>
+    <td width="100"><label>{{user.location}}</label></td>
+    <td width="95"><label>{{user.department}}</label></td>
+    <td width="95"><label>{{user.service}}</label></td>
+    <td width="85"><label>{{user.business_unit}}</label></td>
+    <td width="100"><label>{{user.role_type}}</label></td>
+    <td width="110"><label>{{user.date_start | date : 'medium' }}</label></td>
+    <td width="115" *ngIf="( user.date_end | date:'dd/MM/yyyy') > (test | date:'dd/MM/yyyy')"><label>{{user.date_end | date : 'medium'}}</label></td>
+    <ng-container *ngIf="( user.date_end | date:'dd/MM/yyyy') == (null | date:'dd/MM/yyyy')"><td width="100"> -- AUCUNE -- </td></ng-container>
+    <ng-container *ngIf="( user.date_end | date:'dd/MM/yyyy') == (test | date:'dd/MM/yyyy')"><td width="100"> -- AUCUNE -- </td></ng-container>
+    <td width="80">
+      <label *ngIf="user.is_enabled === true"> actif </label>
+      <label *ngIf="user.is_enabled === false"> désactivé </label>
+    </td>
+    <td width="55">
+      <label *ngIf="user.got_iphone === true"> oui </label>
+      <label *ngIf="user.got_iphone === false"> non </label>
+    </td>
+    <td width="110"><label>{{ user.manager_name }}</label></td>
+    <td>
+      
+      <div *ngIf="role === 'admin'"><button class="button warning" (click)="isEdit=true"> Edit </button></div>
+      <button class="button warning" (click)="isEdit=true" *ngIf="role === 'manager'" disabled> Edit </button>
+
+    </td>
+    </tbody>
+  </table>
+</div>
+
+
+
